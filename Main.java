@@ -1,3 +1,6 @@
+// run the command:
+// javac Main.java && java Main
+
 public class Main {
     int x = 9; // an attribute of the class Main
 
@@ -38,13 +41,13 @@ public class Main {
     // just returns 0.
 
     // Static method
-    static void myStaticMethod() {
+    static void myStaticMethod() { // Class method, doesn't change with object
         System.out.println("Static methods can be called without creating objects");
     }
 
     // Public method
-    public void myPublicMethod() {
-        System.out.println("Public methods must be called by creating objects");
+    void myPublicMethod() { // Instance method, can change with object
+        System.out.println("Non static methods must be called by creating objects");
     }
 
     // ==== Classes and Objects ====
@@ -192,10 +195,23 @@ public class Main {
         Animal animal = new Animal();
         animal.makeSound(); // Output: "The animal makes a sound"
 
-        Dog dog = new Dog();
-        dog.makeSound(); // Output: "The dog barks"
+        Animal dog = new Dog(); // This is polimorphism, dog is an Animal with Dog instances. "dog" don't know
+                                // that Cat and Dog exist, and since its only an Animal, the defined methods are
+                                // only the ones declarated in variable type
+        animal = new Dog(); // This would be the most common way to declare this, since animal is an Animal
+                            // with Animal methods, and if Dog object has own method overwritten (without
 
-        Cat cat = new Cat();
+        // constructor) by the Dog object created - Dog must extend Animal for this to
+        // work.
+        // object type = related to data
+        // var type = related to which objects it can point to (in the example, only
+        // "MakeSound")
+        dog.makeSound(); // Output: "The dog barks"
+        // dog.play(); this wont work because dog is an Animal, not a Dog
+        Dog dog2 = new Dog();
+        dog2.play(); // this works :)
+
+        Cat cat = new Cat(); // cat is just an instance of Cat
         cat.makeSound(); // Output: "The cat meows"
 
         // ==== Polimorfism ====
@@ -208,5 +224,38 @@ public class Main {
         // #### SUPERCLASS #####
         Car car = new Car("Toyota", "Camry");
         car.displayInfo();
+
+        // #### ARRAYS ####
+        // To declare an array, define the variable type with square brackets
+        String[] cars = { "Volvo", "BMW", "Ford", "Mazda" }; // this is an array of strings, called cars.
+        System.out.println("Array length: " + cars.length); // array length
+        System.out.println("First element of array: " + cars[0]); // first item of array
+
+        for (int i = 0; i < cars.length; i++) { // standard for to loop through all elements
+            System.out.println("car " + (i + 1) + ": " + cars[i]); // i+1 because starts in 0
+        }
+        for (String i : cars) { // short for-each loop, used exclusively to loop through elements in arrays
+            System.out.println(i); // here, i is not the position in array, but the element itself
+        }
+
+        // ==== Multidimensional arrays ====
+        // A multidimensional array is an array of arrays
+        // To create a two-dimensional array, add each array within its own set of {}
+        int[][] myNumbers = { { 1, 2, 3, 4 }, { 5, 6, 7 } };
+        System.out.println(myNumbers[1][2]); // Outputs 7
+        myNumbers[1][2] = 9; // changing element value
+        System.out.println(myNumbers[1][2]); // Outputs 9 instead of 7
+        for (int i = 0; i < myNumbers.length; ++i) { // for loop
+            for (int j = 0; j < myNumbers[i].length; ++j) {
+                System.out.println("array " + i + ", position " + j + ": " + myNumbers[i][j]);
+            }
+        }
+        for (int[] i : myNumbers) { // using for-each
+            for (int j : i) {
+                System.out.println(j);
+            }
+
+        }
+
     }
 }
